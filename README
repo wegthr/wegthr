@@ -1,0 +1,6 @@
+Installing GAE SDK:
+http://googleappengine.googlecode.com/files/appengine-java-sdk-1.6.2.1.zip
+
+To run:
+add the java app engine sdk to ${user.home}/bin/appengine-java-sdk/current (or override the appengine.sdk.root property in settings.xml)
+mvn -Pgae-run

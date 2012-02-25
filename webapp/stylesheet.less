@@ -1,0 +1,80 @@
+@white: #fff;
+@highlight: #D8FFED;
+@medium: #ADF7FF;
+@darkish: #6BC4FF;
+@dark: #0374FF;
+
+@footer-size: 40px;
+
+.rounded-corners(@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.center(@margin-top: 0px) {
+    margin: @margin-top auto;
+}
+
+body { 
+    font-family: 'Voces', cursive;
+}
+#frame {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: @footer-size;
+    background-color: @white;
+}
+
+#createForm {
+    position: absolute;
+    top: 30px;
+    left: 30%;
+    right: 30%;
+    bottom: 30px;
+    padding: 25px;
+    background-color: @medium;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: @dark;
+    .rounded-corners;
+    .center;
+    margin-top: 30px;
+}
+
+#createForm h1 { margin: 0px; }
+#createForm input { border: 1px solid @darkish; }
+#createForm .note { font-size: .7em; }
+
+#cf-button {
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+    background-color: @darkish; 
+    color: @white;
+}
+
+#footer {
+    background-color: @dark;
+    border-top: 2px solid @darkish;
+    color: @highlight;
+    height: @footer-size;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+#footer .powered-by {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+#footer .version {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: @darkish;
+    font-size: .9em;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>wgthr</title>
+        <link href='http://fonts.googleapis.com/css?family=Voces' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="stylesheet.css" />
+    </head>
+    <body>
+        <div id="frame">
+            <div id="createForm">
+                <h1>Organize</h1>
+                <p>To organize an event fill out the form below:</p>
+                <p>Your Email: <input type="text" name="organizerEmail" data-ghostText="yourname@domain.com" /></p>
+                <p>Time & Place: <input type="text" name="title" data-ghostText="Mineos @ 8 PM" /></p>
+                <p>Who's Coming? <input type="text" name="attendees" data-ghostText="attendee@domain.com" /> 
+                    <br /><span class="note">email addresses separated by commas</span></p>
+                <div id="cf-button">Create</div>
+            </div>
+        </div>
+        <div id="footer">
+            <img class="powered-by" src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
+            <div class="version">${project.name}.v${project.version}</div>
+        </div>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="scripts.js"></script>
+    </body>
+</html>
