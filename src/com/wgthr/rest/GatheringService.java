@@ -2,6 +2,7 @@ package com.wgthr.rest;
 
 import com.wgthr.model.Gathering;
 import com.wgthr.model.Place;
+import com.wgthr.notify.Notifier;
 import com.wgthr.persist.Persist;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,9 @@ public class GatheringService {
 
     @Inject
     private Persist persist;
+    
+    @Inject
+    private Notifier notifier;
 
     @POST
     @Produces("application/json")
@@ -37,6 +41,8 @@ public class GatheringService {
         gathering.setPlaces(Arrays.asList(place));
 
         persist.persist(gathering);
+        
+//        notifier.sendInvites(gathering);
 
         return gathering;
     }
