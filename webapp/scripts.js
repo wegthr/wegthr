@@ -9,7 +9,7 @@ $(function() {
             var payload={
                 'organizerEmail': $('input[name="organizerEmail"]').val(),
                 'title': $('input[name="title"]').val(),
-                'attendees': attendees
+                'attendees': $('input[name="attendees"]').val().split(',')
             };
             $.post('rest/gathering.json', payload);
         });

@@ -20,6 +20,13 @@
         <pmf.name>pmf</pmf.name>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>objectify-appengine</id>
+            <url>http://objectify-appengine.googlecode.com/svn/maven</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -32,6 +39,11 @@
             <artifactId>gae-runtime</artifactId>
             <version>${gae.version}</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>

@@ -1,9 +1,11 @@
 package com.wgthr.notify.mail;
 
+import com.wgthr.Settings;
 import com.wgthr.model.Attendee;
 import com.wgthr.model.Gathering;
 import com.wgthr.notify.Notifier;
 import java.util.Properties;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.mail.Address;
 import javax.mail.Message;
@@ -15,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 @Singleton
 public class MailNotifier implements Notifier {
 
+    @Inject private Settings settings;
+    
     @Override
     public void sendInvites(final Gathering gathering) {
 
@@ -23,14 +27,17 @@ public class MailNotifier implements Notifier {
         final MimeMessage message = new MimeMessage(session);
         try {
             
-            message.setFrom(new InternetAddress("notifications@wgthr.com", "wgthr.com Notifications"));
-            message.setReplyTo(new Address[] { new InternetAddress("voting@wgthr.com", "wgthr.com Notifications" )});
+            final InternetAddress from = new InternetAddress(settings.getMailInviteSenderAddress(), settings.getMailInviteSenderName());
+            message.setFrom(from);
+            message.setReplyTo(new Address[] { from });
             for (Attendee attendee : gathering.getAttendees()) {
                 message.addRecipient(Message.RecipientType.BCC, new InternetAddress( attendee.getEmailAddress() ));
             }
             message.addRecipient(Message.RecipientType.BCC, new InternetAddress( gathering.getOrganizerEmail() ) );
-            message.setSubject("You have been invited to " + gathering.getTitle());
-            message.setText("You have been invited to " + gathering.getTitle());
+            message.setSubject(settings.getMailInviteSubject());
+            
+            final String text = gathering.getOrganizerEmail() + " has invited you to " + gathering.getTitle();
+            message.setText(text);
             
             Transport.send(message);
             
