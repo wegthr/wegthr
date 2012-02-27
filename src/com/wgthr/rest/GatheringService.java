@@ -36,7 +36,7 @@ public class GatheringService {
 
         persist.persist(gathering);
         
-//        notifier.sendInvites(gathering);
+        notifier.sendInvites(gathering);
 
         return gathering;
     }
