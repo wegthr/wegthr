@@ -2,19 +2,22 @@ package com.wgthr.model;
 
 import java.util.List;
 import javax.jdo.annotations.*;
-import javax.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Place {
 
-    @Id
     @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     @Getter
+    private com.google.appengine.api.datastore.Key key;
+
     @Setter
-    private Long id;
-    
+    @JsonIgnore
+    private Gathering gathering;
+
     @Getter
     @Setter
     private String index;
@@ -27,4 +30,8 @@ public class Place {
     @Setter
     private List<String> votes;
 
+    @JsonIgnore
+    public Gathering getGathering() {
+        return gathering;
+    }
 }

@@ -1,28 +1,33 @@
 package com.wgthr.model;
 
-import javax.jdo.annotations.IdentityType;
+import com.google.appengine.api.datastore.Key;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import javax.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable
 public class Attendee {
 
-    @Id
-    @Getter
-    @Setter
-    private Long id;
-    
     @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Getter
+    private Key key;
+
     @Getter
     @Setter
     private String emailAddress;
-    
+
     @Getter
     @Setter
     private String vote;
+
+    @Setter
+    @JsonIgnore
+    private Gathering gathering;
 
     public Attendee() {
     }
@@ -31,4 +36,8 @@ public class Attendee {
         this.emailAddress = emailAddress;
     }
     
+    @JsonIgnore
+    public Gathering getGathering() {
+        return gathering;
+    }
 }

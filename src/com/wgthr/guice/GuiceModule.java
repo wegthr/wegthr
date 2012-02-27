@@ -30,7 +30,7 @@ public class GuiceModule extends ServletModule {
     @Override
     protected void configureServlets() {
         install(settings());
-        install(objectifyPersistence());
+        install(jdoPersistence());
         install(notifications());
         install(restServices());
     }
