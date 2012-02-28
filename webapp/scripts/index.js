@@ -11,7 +11,7 @@ $(function() {
                 'title': $('input[name="title"]').val(),
                 'attendees': $('input[name="attendees"]').val().split(',')
             };
-            $.post('rest/gathering.json', payload);
+            $.post('rest/gathering/create.json', payload);
         });
     })();
    

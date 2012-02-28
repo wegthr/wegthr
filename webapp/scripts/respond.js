@@ -1,6 +1,6 @@
 $(function() {
    
-   var url = 'rest/gathering/get.json?attendeeKey=' + $.param('a');
+   var url = 'rest/gathering/invite.json?invite=' + $.param('a');
    debugger;
    $.getJSON(url, function() {
       debugger; 
