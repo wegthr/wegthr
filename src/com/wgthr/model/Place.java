@@ -11,8 +11,9 @@ public class Place {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
     @Getter
-    private com.google.appengine.api.datastore.Key key;
+    private String key;
 
     @Setter
     @JsonIgnore
@@ -34,4 +35,5 @@ public class Place {
     public Gathering getGathering() {
         return gathering;
     }
+    
 }
