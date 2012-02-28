@@ -1,7 +1,6 @@
 package com.wgthr.persist.objectivy;
 
 import com.googlecode.objectify.Objectify;
-import com.wgthr.model.Gathering;
 import com.wgthr.persist.Persist;
 import javax.inject.Inject;
 
@@ -10,12 +9,13 @@ public class ObjectifyPersistImpl implements Persist {
     @Inject private Objectify objectify;
 
     @Override
-    public void persist(final Gathering gathering) {
-        objectify.put(gathering);
+    public <T> T persist(final T object) {
+        objectify.put(object);
+        return object;
     }
 
     @Override
-    public <T> T find(Class<T> clazz, Object key) {
+    public <T> T find(Class<T> clazz, String key) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

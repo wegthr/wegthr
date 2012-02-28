@@ -4,7 +4,7 @@ import com.wgthr.model.Gathering;
 
 public interface Persist {
 
-    public void persist(final Gathering gathering);
+    public <T> T persist(final T object);
     
-    public <T> T find(final Class<T> clazz, final Object key);
+    public <T> T find(final Class<T> clazz, final String key);
 }

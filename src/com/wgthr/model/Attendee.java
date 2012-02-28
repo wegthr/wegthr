@@ -1,10 +1,6 @@
 package com.wgthr.model;
 
-import com.google.appengine.api.datastore.Key;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -14,8 +10,8 @@ public class Attendee {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    @Getter
-    private Key key;
+    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
+    private String key;
 
     @Getter
     @Setter

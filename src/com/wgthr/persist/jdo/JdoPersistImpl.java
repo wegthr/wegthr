@@ -1,8 +1,8 @@
 package com.wgthr.persist.jdo;
 
-import com.wgthr.model.Gathering;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.wgthr.persist.Persist;
-import java.io.Serializable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.jdo.PersistenceManager;
@@ -15,14 +15,21 @@ public class JdoPersistImpl implements Persist {
     private PersistenceManagerFactory pmf;
 
     @Override
-    public void persist(final Gathering gathering) {
+    public <T> T persist(final T object) {
         final PersistenceManager pm = pmf.getPersistenceManager();
-        pm.makePersistent(gathering);
-        pm.close();
+        final T returner;
+        try {
+            returner = pm.makePersistent(object);
+        } catch (final Exception e) {
+            pm.close();
+            throw new RuntimeException(e);
+        }
+        return returner;
     }
 
     @Override
-    public <T> T find(final Class<T> clazz, final Object key) {
+    public <T> T find(final Class<T> clazz, final String keyVal) {
+        final Key key = KeyFactory.createKey(clazz.getName(), keyVal);
         final PersistenceManager pm = pmf.getPersistenceManager();
         try {
             return pm.getObjectById(clazz, key);
@@ -32,6 +39,4 @@ public class JdoPersistImpl implements Persist {
             pm.close();
         }
     }
-    
-    
 }
