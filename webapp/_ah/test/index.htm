@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>wgthr tests</title>
+        <link rel="stylesheet" href="qunit.css" />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.json.min.js"></script>
+        <script type="text/javascript" src="qunit.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                
+                (function() { 
+                    
+                    module("Testing REST Services");
+                
+                    var gathering = {
+                        'organizerEmail': 'organizer@domain.com',
+                        'title': 'Mineo\'s @ 8 PM',
+                        'attendees': ['attendee1@domain.com', 'attendee2@domain.com']
+                    };
+                
+                    asyncTest("create a new gathering", function() {
+                    
+                        $.ajax({
+                            'type': 'POST',
+                            'url': '../../rest/gathering/create.json',
+                            'data': gathering,
+                            'success': function(data) {
+                                ok( true, 'gathering created\n' + $.toJSON(data));
+                                equal(data.organizerEmail, gathering.organizerEmail, 'should have correct organizer email');
+                                equal(data.title, gathering.title, 'should have correct title');
+                                equal(data.attendees.length, gathering.attendees.length, 'should have same number of attendees');
+                                equal( typeof data.key, typeof '', 'should return a string representation of the gathering key, returned ' + $.toJSON(data.key));
+                                
+                                $(data.attendees).each(function(i,a) {
+                                    var attendee = $(gathering.attendees).filter(function(j,k) { return k == a.emailAddress; })[0];
+                                    notEqual( attendee, null, "should be an attendee that was posted");
+                                    equal(attendee.vote, null, "should have a null vote");
+                                    equal( typeof data.key, typeof '', 'should return a string representation of the attendee key, returned ' + $.toJSON(data.key));
+                                });
+                                
+                                gathering = data;
+                                start();
+                                testRetrieve();
+                            },
+                            'error': function(jq,status,error) {
+                                ok( false, 'gathering creation failed with status ' + status + '\nError:\n' + error);
+                                log( false, null, null, error);
+                                start();
+                                testRetrieve();
+                            }});
+                    
+                    });
+                
+                    var testRetrieve = function() {
+                        asyncTest("retrieving gathering information", function() {
+                
+                            $.ajax({
+                                'type': 'GET',
+                                'url': '../../rest/gathering/get.json',
+                                'success': function(data) {
+                                    ok( true, 'successfully retrieved\n' + $.toJSON(data));
+                                    start();
+                                },
+                                'error': function(jq,status,error) {
+                                    ok( false, 'retrieve failed with status ' + status + '\nError:\n' + error);
+                                    start();
+                                }
+                            });
+                        })
+                    };
+                })();
+              
+            })
+        </script>
+    </head>
+    <body>
+        <h1 id="qunit-header">QUnit example</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture">test markup, will be hidden</div>
+    </body>
+</html>
