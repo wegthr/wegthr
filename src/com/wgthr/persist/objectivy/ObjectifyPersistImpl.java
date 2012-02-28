@@ -13,5 +13,10 @@ public class ObjectifyPersistImpl implements Persist {
     public void persist(final Gathering gathering) {
         objectify.put(gathering);
     }
+
+    @Override
+    public <T> T find(Class<T> clazz, Object key) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

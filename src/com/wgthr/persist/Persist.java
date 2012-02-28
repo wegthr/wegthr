@@ -6,4 +6,5 @@ public interface Persist {
 
     public void persist(final Gathering gathering);
     
+    public <T> T find(final Class<T> clazz, final Object key);
 }
