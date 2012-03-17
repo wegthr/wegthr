@@ -12,7 +12,7 @@ $.extend({
             return vars;
         },
         param: function(name){
-            return $.params()[name];
+            return this.params()[name];
         },
         rest: {
             config: {

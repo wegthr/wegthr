@@ -10,11 +10,14 @@
         <script type="text/javascript" src="qunit.js"></script>
         <script type="text/javascript">
             $(function() {
-                
                 $.w.rest.config.baseUrl = '../..';
                 $.w.rest.config.error = function(jq,status,error) {
                     ok( false, 'retrieve failed with status ' + status + '\nError:\n' + error);
                     start();
+                };
+                
+                var addLink = function(href,title) {
+                    $('#links').append($('<a>', { 'href': href }, title));
                 };
                 
                 (function() {
@@ -40,8 +43,10 @@
                             $(data.invitations).each(function(i,a) {
                                 var invitation = $(gathering.invitations).filter(function(j,k) { return k == a.emailAddress; })[0];
                                 notEqual( invitation, null, "should be an invitation that was posted");
-                                equal(invitation.vote, null, "should have a null vote");
-                                equal( typeof data.key, typeof '', 'should return a string representation of the invitation key, returned ' + $.toJSON(data.key));
+                                equal(a.vote, null, "should have a null vote");
+                                equal( typeof a.key, typeof '', 'should return a string representation of the invitation key, returned ' + $.toJSON(data.key));
+                                var href='/respond.htm?i=' + a.key;
+                                ok(true, a.emailAddress + ' respond page \'' + href + '\'');
                             });
                                 
                             gathering = data;

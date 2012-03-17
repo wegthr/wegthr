@@ -8,8 +8,12 @@
     </head>
     <body>
         <div id="frame">
-            <div id="respond">
-                
+            <div id="respond" class="center-box">
+                <script id="gatheringTemplate" type="text/html">
+                    <h1>${title}</h1>
+                    <span class="note">organized by ${organizerEmail}</span>
+                    <p><input type="checkbox" id="goingBox" /> You going?</p>
+                </script>
             </div>
         </div>
         <div id="footer">
@@ -17,6 +21,7 @@
             <div class="version">${project.name}.v${project.version}</div>
         </div>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="scripts/jquery.tmpl.min.js"></script>
         <script type="text/javascript" src="scripts/common.js"></script>
         <script type="text/javascript" src="scripts/respond.js"></script>
         <script type="text/javascript">
