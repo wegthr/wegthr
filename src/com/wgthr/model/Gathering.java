@@ -1,6 +1,5 @@
 package com.wgthr.model;
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import javax.jdo.annotations.*;
@@ -12,7 +11,7 @@ public class Gathering {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
+    @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
     @Getter
     private String key;
 
@@ -31,7 +30,7 @@ public class Gathering {
     @Getter
     @Persistent(mappedBy = "gathering")
     private List<Attendee> attendees;
-    
+
     public void setPlaces(final List<String> places) {
 
         if (this.places == null) {

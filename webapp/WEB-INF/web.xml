@@ -19,7 +19,7 @@
     </welcome-file-list>
     <security-constraint>
         <web-resource-collection>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/_ah/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>

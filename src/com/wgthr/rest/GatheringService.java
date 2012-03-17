@@ -46,9 +46,9 @@ public class GatheringService {
     @GET
     @Produces("application/json")
     @Path("get.json")
-    public Gathering get(@QueryParam("key") final String gatheringKey) {
-        logger.info("Retrieving gathering [gatheringKey=" + gatheringKey + "]");
-        return persist.find(Gathering.class, gatheringKey);
+    public Gathering get(@QueryParam("key") final String key) {
+        logger.info("Retrieving gathering [key=" + key + "]");
+        return persist.find(Gathering.class, key);
     }
 
     @GET

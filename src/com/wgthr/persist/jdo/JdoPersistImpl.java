@@ -28,8 +28,8 @@ public class JdoPersistImpl implements Persist {
     }
 
     @Override
-    public <T> T find(final Class<T> clazz, final String keyVal) {
-        final Key key = KeyFactory.createKey(clazz.getName(), keyVal);
+    public <T> T find(final Class<T> clazz, final String keyStr) {
+        final Key key = KeyFactory.stringToKey(keyStr);
         final PersistenceManager pm = pmf.getPersistenceManager();
         try {
             return pm.getObjectById(clazz, key);

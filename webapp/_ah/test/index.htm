@@ -26,11 +26,13 @@
                             'type': 'POST',
                             'url': '../../rest/gathering/create.json',
                             'data': gathering,
-                            'success': function(data) {
-                                ok( true, 'gathering created\n' + $.toJSON(data));
+                            'success': function(data,status,jqxhr) {
+                                equal(jqxhr.status, '200', 'gathering created\n' + $.toJSON(data));
+                                notEqual(data.key, null, 'should have a key');
                                 equal(data.organizerEmail, gathering.organizerEmail, 'should have correct organizer email');
                                 equal(data.title, gathering.title, 'should have correct title');
-                                equal(data.attendees.length, gathering.attendees.length, 'should have same number of attendees');
+                                if(data.attendees)
+                                    equal(data.attendees.length, gathering.attendees.length, 'should have same number of attendees');
                                 equal( typeof data.key, typeof '', 'should return a string representation of the gathering key, returned ' + $.toJSON(data.key));
                                 
                                 $(data.attendees).each(function(i,a) {
@@ -58,7 +60,7 @@
                 
                             $.ajax({
                                 'type': 'GET',
-                                'url': '../../rest/gathering/get.json',
+                                'url': '../../rest/gathering/get.json?key=' + gathering.key,
                                 'success': function(data) {
                                     ok( true, 'successfully retrieved\n' + $.toJSON(data));
                                     start();
