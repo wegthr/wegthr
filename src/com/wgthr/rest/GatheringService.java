@@ -29,7 +29,7 @@ public class GatheringService {
     @Path("create.json")
     public Gathering create(@FormParam("organizerEmail") final String organizerEmail, @FormParam("title") final String title,
             @FormParam("invitations[]") final List<String> attendees) {
-
+        logger.info("organizerEmail=" + organizerEmail);
         final Gathering gathering = new Gathering();
         gathering.setTitle(title);
         gathering.setOrganizerEmail(organizerEmail);

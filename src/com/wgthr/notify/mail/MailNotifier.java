@@ -30,8 +30,8 @@ public class MailNotifier implements Notifier {
             final InternetAddress from = new InternetAddress(settings.getMailInviteSenderAddress(), settings.getMailInviteSenderName());
             message.setFrom(from);
             message.setReplyTo(new Address[] { from });
-            for (Invite attendee : gathering.getInvitations()) {
-                message.addRecipient(Message.RecipientType.BCC, new InternetAddress( attendee.getEmailAddress() ));
+            for (Invite invite : gathering.getInvitations()) {
+                message.addRecipient(Message.RecipientType.BCC, new InternetAddress( invite.getEmailAddress() ));
             }
             message.addRecipient(Message.RecipientType.BCC, new InternetAddress( gathering.getOrganizerEmail() ) );
             message.setSubject(settings.getMailInviteSubject());

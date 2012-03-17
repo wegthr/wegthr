@@ -5,12 +5,19 @@
         <title>wgthr tests</title>
         <link rel="stylesheet" href="qunit.css" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="../../scripts/common.js"></script>
         <script type="text/javascript" src="jquery.json.min.js"></script>
         <script type="text/javascript" src="qunit.js"></script>
         <script type="text/javascript">
             $(function() {
                 
-                (function() { 
+                $.w.rest.config.baseUrl = '../..';
+                $.w.rest.config.error = function(jq,status,error) {
+                    ok( false, 'retrieve failed with status ' + status + '\nError:\n' + error);
+                    start();
+                };
+                
+                (function() {
                     
                     module("Testing REST Services");
                 
@@ -21,38 +28,26 @@
                     };
                 
                     asyncTest("create a new gathering", function() {
-                    
-                        $.ajax({
-                            'type': 'POST',
-                            'url': '../../rest/gathering/create.json',
-                            'data': gathering,
-                            'success': function(data,status,jqxhr) {
-                                equal(jqxhr.status, '200', 'gathering created\n' + $.toJSON(data));
-                                notEqual(data.key, null, 'should have a key');
-                                equal(data.organizerEmail, gathering.organizerEmail, 'should have correct organizer email');
-                                equal(data.title, gathering.title, 'should have correct title');
-                                if(data.invitations)
-                                    equal(data.invitations.length, gathering.invitations.length, 'should have same number of invitations');
-                                equal( typeof data.key, typeof '', 'should return a string representation of the gathering key, returned ' + $.toJSON(data.key));
+                        $.w.rest.createGathering(gathering, function(data,textStatus,jqxhr) {
+                            equal(jqxhr.status, '200', 'gathering created\n' + $.toJSON(data));
+                            notEqual(data.key, null, 'should have a key');
+                            equal(data.organizerEmail, gathering.organizerEmail, 'should have correct organizer email');
+                            equal(data.title, gathering.title, 'should have correct title');
+                            if(data.invitations)
+                                equal(data.invitations.length, gathering.invitations.length, 'should have same number of invitations');
+                            equal( typeof data.key, typeof '', 'should return a string representation of the gathering key, returned ' + $.toJSON(data.key));
                                 
-                                $(data.invitations).each(function(i,a) {
-                                    var invitation = $(gathering.invitations).filter(function(j,k) { return k == a.emailAddress; })[0];
-                                    notEqual( invitation, null, "should be an invitation that was posted");
-                                    equal(invitation.vote, null, "should have a null vote");
-                                    equal( typeof data.key, typeof '', 'should return a string representation of the invitation key, returned ' + $.toJSON(data.key));
-                                });
+                            $(data.invitations).each(function(i,a) {
+                                var invitation = $(gathering.invitations).filter(function(j,k) { return k == a.emailAddress; })[0];
+                                notEqual( invitation, null, "should be an invitation that was posted");
+                                equal(invitation.vote, null, "should have a null vote");
+                                equal( typeof data.key, typeof '', 'should return a string representation of the invitation key, returned ' + $.toJSON(data.key));
+                            });
                                 
-                                gathering = data;
-                                start();
-                                testRetrieveGatheringByKey();
-                            },
-                            'error': function(jq,status,error) {
-                                ok( false, 'gathering creation failed with status ' + status + '\nError:\n' + error);
-                                log( false, null, null, error);
-                                start();
-                                testRetrieveGatheringByKey();
-                            }});
-                    
+                            gathering = data;
+                            start();
+                            testRetrieveGatheringByKey();
+                        });
                     });
                     
                     var testEqual = function(got, expected) {
@@ -65,43 +60,27 @@
                     var testRetrieveGatheringByKey = function() {
                         asyncTest("retrieving gathering information by key", function() {
                 
-                            $.ajax({
-                                'type': 'GET',
-                                'url': '../../rest/gathering/' + gathering.key + '.json',
-                                'success': function(data) {
-                                    testEqual(data, gathering);
-                                    start();
-                                    testRetrieveGatheringByInvitation(data.invitations[0].key);
-                                },
-                                'error': function(jq,status,error) {
-                                    ok( false, 'retrieve failed with status ' + status + '\nError:\n' + error);
-                                    start();
-                                }
+                            $.w.rest.gathering(gathering.key, function(data) {
+                                testEqual(data, gathering);
+                                start();
+                                testRetrieveGatheringByInvitation(data.invitations[0].key);
                             });
-                        })
+                        });
                     };
                     
                     var testRetrieveGatheringByInvitation = function(key) {
                         asyncTest("retrieving gathering by invite key", function() {
                             
-                            $.ajax({
-                                'type': 'GET',
-                                'url': '../../rest/gathering/invite/' + key + '.json',
-                                'success': function(data) {
-                                    testEqual(data, gathering);
-                                    equal( data.key, gathering.key, 'successfully retrieved\n' + $.toJSON(data));
-                                    start();
-                                },
-                                'error': function(jq,status,error) {
-                                    ok( false, 'retrieve failed with status ' + status + '\nError:\n' + error);
-                                    start();
-                                }
-                            })
+                            $.w.rest.gatheringByInvite(key, function(data) {
+                                testEqual(data, gathering);
+                                equal( data.key, gathering.key, 'successfully retrieved\n' + $.toJSON(data));
+                                start();
+                            });
                         });
                     };
                 })();
-              
-            })
+            });
+
         </script>
     </head>
     <body>
