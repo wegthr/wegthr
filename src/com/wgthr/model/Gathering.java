@@ -29,7 +29,7 @@ public class Gathering {
 
     @Getter
     @Persistent(mappedBy = "gathering")
-    private List<Attendee> attendees;
+    private List<Invite> invitations;
 
     public void setPlaces(final List<String> places) {
 
@@ -47,16 +47,16 @@ public class Gathering {
 
     }
 
-    public void setAttendees(final List<String> emails) {
+    public void setInvitations(final List<String> emails) {
 
-        if (this.attendees == null) {
-            attendees = new ArrayList<Attendee>(emails.size());
+        if (this.invitations == null) {
+            invitations = new ArrayList<Invite>(emails.size());
         }
 
         for (final String email : emails) {
-            final Attendee attendee = new Attendee(email);
+            final Invite attendee = new Invite(email);
             attendee.setGathering(this);
-            attendees.add(attendee);
+            invitations.add(attendee);
         }
 
     }

@@ -6,11 +6,12 @@ import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @PersistenceCapable
-public class Attendee {
+public class Invite {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
+    @Getter
     private String key;
 
     @Getter
@@ -25,10 +26,10 @@ public class Attendee {
     @JsonIgnore
     private Gathering gathering;
 
-    public Attendee() {
+    public Invite() {
     }
 
-    public Attendee(final String emailAddress) {
+    public Invite(final String emailAddress) {
         this.emailAddress = emailAddress;
     }
     

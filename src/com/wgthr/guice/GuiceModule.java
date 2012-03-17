@@ -8,7 +8,7 @@ import com.googlecode.objectify.ObjectifyService;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
-import com.wgthr.model.Attendee;
+import com.wgthr.model.Invite;
 import com.wgthr.model.Gathering;
 import com.wgthr.model.Place;
 import com.wgthr.notify.Notifier;
@@ -85,7 +85,7 @@ public class GuiceModule extends ServletModule {
             @Override
             protected void configure() {
                 ObjectifyService.register(Gathering.class);
-                ObjectifyService.register(Attendee.class);
+                ObjectifyService.register(Invite.class);
                 ObjectifyService.register(Place.class);
                 final Objectify objectify = ObjectifyService.begin();
                 bind(Objectify.class).toInstance(objectify);

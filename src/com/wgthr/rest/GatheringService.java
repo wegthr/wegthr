@@ -1,6 +1,6 @@
 package com.wgthr.rest;
 
-import com.wgthr.model.Attendee;
+import com.wgthr.model.Invite;
 import com.wgthr.model.Gathering;
 import com.wgthr.notify.Notifier;
 import com.wgthr.persist.Persist;
@@ -28,12 +28,12 @@ public class GatheringService {
     @Produces("application/json")
     @Path("create.json")
     public Gathering create(@FormParam("organizerEmail") final String organizerEmail, @FormParam("title") final String title,
-            @FormParam("attendees[]") final List<String> attendees) {
+            @FormParam("invitations[]") final List<String> attendees) {
 
         final Gathering gathering = new Gathering();
         gathering.setTitle(title);
         gathering.setOrganizerEmail(organizerEmail);
-        gathering.setAttendees(attendees);
+        gathering.setInvitations(attendees);
         gathering.setPlaces(Arrays.asList(title));
 
         persist.persist(gathering);
@@ -45,8 +45,8 @@ public class GatheringService {
 
     @GET
     @Produces("application/json")
-    @Path("get.json")
-    public Gathering get(@QueryParam("key") final String key) {
+    @Path("{key}.json")
+    public Gathering get(@PathParam("key") final String key) {
         logger.info("Retrieving gathering [key=" + key + "]");
         final Gathering gathering = persist.find(Gathering.class, key);
         return gathering;
@@ -54,10 +54,10 @@ public class GatheringService {
 
     @GET
     @Produces("application/json")
-    @Path("invite.json")
-    public Gathering invite(@QueryParam("invite") final String attendeeKey) {
-        logger.info("Retrieving gathering [attendeeKey=" + attendeeKey + "]");
-        final Attendee attendee = persist.find(Attendee.class, attendeeKey);
+    @Path("invite/{key}.json")
+    public Gathering attendee(@PathParam("key") final String inviteKey) {
+        logger.info("Retrieving gathering [attendeeKey=" + inviteKey + "]");
+        final Invite attendee = persist.find(Invite.class, inviteKey);
         return attendee.getGathering();
     }
 }

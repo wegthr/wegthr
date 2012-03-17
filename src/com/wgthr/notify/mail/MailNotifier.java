@@ -1,7 +1,7 @@
 package com.wgthr.notify.mail;
 
 import com.wgthr.Settings;
-import com.wgthr.model.Attendee;
+import com.wgthr.model.Invite;
 import com.wgthr.model.Gathering;
 import com.wgthr.notify.Notifier;
 import java.util.Properties;
@@ -30,7 +30,7 @@ public class MailNotifier implements Notifier {
             final InternetAddress from = new InternetAddress(settings.getMailInviteSenderAddress(), settings.getMailInviteSenderName());
             message.setFrom(from);
             message.setReplyTo(new Address[] { from });
-            for (Attendee attendee : gathering.getAttendees()) {
+            for (Invite attendee : gathering.getInvitations()) {
                 message.addRecipient(Message.RecipientType.BCC, new InternetAddress( attendee.getEmailAddress() ));
             }
             message.addRecipient(Message.RecipientType.BCC, new InternetAddress( gathering.getOrganizerEmail() ) );
