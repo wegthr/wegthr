@@ -8,7 +8,6 @@ import com.googlecode.objectify.ObjectifyService;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
-import com.wgthr.inject.PersistenceManagerFactoryProvider;
 import com.wgthr.model.Attendee;
 import com.wgthr.model.Gathering;
 import com.wgthr.model.Place;
@@ -16,6 +15,7 @@ import com.wgthr.notify.Notifier;
 import com.wgthr.notify.mail.MailNotifier;
 import com.wgthr.persist.Persist;
 import com.wgthr.persist.jdo.JdoPersistImpl;
+import com.wgthr.persist.jdo.JdoPersistenceManagerOpeningFilter;
 import com.wgthr.persist.objectivy.ObjectifyPersistImpl;
 import com.wgthr.rest.GatheringService;
 import java.io.IOException;
@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import javax.jdo.PersistenceManagerFactory;
 
 public class GuiceModule extends ServletModule {
 
@@ -70,12 +69,12 @@ public class GuiceModule extends ServletModule {
     }
 
     private AbstractModule jdoPersistence() {
-        return new AbstractModule() {
+        return new ServletModule() {
 
             @Override
-            protected void configure() {
-                bind(PersistenceManagerFactory.class).toProvider(PersistenceManagerFactoryProvider.class);
+            protected void configureServlets() {
                 bind(Persist.class).to(JdoPersistImpl.class);
+                filter("/rest/*").through(JdoPersistenceManagerOpeningFilter.class);
             }
         };
     }

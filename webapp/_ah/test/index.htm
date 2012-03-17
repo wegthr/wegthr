@@ -62,7 +62,10 @@
                                 'type': 'GET',
                                 'url': '../../rest/gathering/get.json?key=' + gathering.key,
                                 'success': function(data) {
-                                    ok( true, 'successfully retrieved\n' + $.toJSON(data));
+                                    equal( data.key, gathering.key, 'successfully retrieved\n' + $.toJSON(data));
+                                    equal( data.title, gathering.title, 'should have same title');
+                                    equal( typeof( data.attendees ), 'object', 'should have attendees');
+                                    if(data.attendees) equal( data.attendees.length, gathering.attendees.length, 'should have same number of attendees');
                                     start();
                                 },
                                 'error': function(jq,status,error) {

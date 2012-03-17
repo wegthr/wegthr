@@ -54,7 +54,9 @@ public class Gathering {
         }
 
         for (final String email : emails) {
-            attendees.add(new Attendee(email));
+            final Attendee attendee = new Attendee(email);
+            attendee.setGathering(this);
+            attendees.add(attendee);
         }
 
     }
