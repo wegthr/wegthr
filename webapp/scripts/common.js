@@ -39,6 +39,9 @@ $.extend({
             },
             gatheringByInvite: function(key, cb) {
                 this.__call('GET', 'gathering/invite/' + key, {}, cb);
+            },
+            vote: function(key, placeKey, cb) {
+                this.__call('POST', 'gathering/vote/' + key, { 'p': placeKey }, cb);
             }
         }
     }

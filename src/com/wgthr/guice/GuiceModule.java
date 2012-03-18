@@ -1,6 +1,7 @@
 package com.wgthr.guice;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
 import com.googlecode.objectify.Objectify;
@@ -14,8 +15,10 @@ import com.wgthr.model.Place;
 import com.wgthr.notify.Notifier;
 import com.wgthr.notify.mail.MailNotifier;
 import com.wgthr.persist.Persist;
+import com.wgthr.persist.Transactional;
 import com.wgthr.persist.jdo.JdoPersistImpl;
 import com.wgthr.persist.jdo.JdoPersistenceManagerOpeningFilter;
+import com.wgthr.persist.jdo.JdoTransactionInterceptor;
 import com.wgthr.persist.objectivy.ObjectifyPersistImpl;
 import com.wgthr.rest.GatheringService;
 import java.io.IOException;
@@ -75,6 +78,11 @@ public class GuiceModule extends ServletModule {
             protected void configureServlets() {
                 bind(Persist.class).to(JdoPersistImpl.class);
                 filter("/rest/*").through(JdoPersistenceManagerOpeningFilter.class);
+                
+                final JdoTransactionInterceptor txIntercept = new JdoTransactionInterceptor();
+                this.requestInjection(txIntercept);
+                this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), txIntercept);
+                
             }
         };
     }

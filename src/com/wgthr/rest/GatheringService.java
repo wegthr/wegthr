@@ -4,6 +4,7 @@ import com.wgthr.model.Invite;
 import com.wgthr.model.Gathering;
 import com.wgthr.notify.Notifier;
 import com.wgthr.persist.Persist;
+import com.wgthr.persist.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,6 +28,7 @@ public class GatheringService {
     @POST
     @Produces("application/json")
     @Path("create.json")
+    @Transactional
     public Gathering create(@FormParam("organizerEmail") final String organizerEmail, @FormParam("title") final String title,
             @FormParam("invitations[]") final List<String> attendees) {
         logger.info("organizerEmail=" + organizerEmail);
@@ -55,9 +57,23 @@ public class GatheringService {
     @GET
     @Produces("application/json")
     @Path("invite/{key}.json")
-    public Gathering attendee(@PathParam("key") final String inviteKey) {
+    public Gathering getGatheringByInvite(@PathParam("key") final String inviteKey) {
         logger.info("Retrieving gathering [attendeeKey=" + inviteKey + "]");
-        final Invite attendee = persist.find(Invite.class, inviteKey);
-        return attendee.getGathering();
+        return getInvite(inviteKey).getGathering();
+    }
+
+    @POST
+    @Produces("application/json")
+    @Path("vote/{key}.json")
+    @Transactional
+    public Gathering vote(@PathParam("key") final String inviteKey, @FormParam("p") final String placeKey) {
+        logger.info("Placing vote [inviteKey=" + inviteKey + ",placeKey=" + placeKey + "]");
+        final Invite invite = getInvite(inviteKey);
+        invite.setVote(placeKey);
+        return invite.getGathering();
+    }
+
+    private Invite getInvite(final String inviteKey) {
+        return persist.find(Invite.class, inviteKey);
     }
 }

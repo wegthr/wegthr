@@ -68,18 +68,38 @@
                             $.w.rest.gathering(gathering.key, function(data) {
                                 testEqual(data, gathering);
                                 start();
+                                gathering = data;
                                 testRetrieveGatheringByInvitation(data.invitations[0].key);
                             });
                         });
                     };
                     
-                    var testRetrieveGatheringByInvitation = function(key) {
+                    var testRetrieveGatheringByInvitation = function(inviteKey) {
                         asyncTest("retrieving gathering by invite key", function() {
-                            
-                            $.w.rest.gatheringByInvite(key, function(data) {
+                            $.w.rest.gatheringByInvite(inviteKey, function(data) {
                                 testEqual(data, gathering);
                                 equal( data.key, gathering.key, 'successfully retrieved\n' + $.toJSON(data));
                                 start();
+                                gathering = data;
+                                testVoteService(inviteKey);
+                            });
+                        });
+                    };
+                    
+                    var testVoteService = function(inviteKey) {
+                        asyncTest("calling vote service", function() {
+                           $.w.rest.vote(inviteKey, gathering.places[0].key, function(gathering) {
+                               var invitation = $(gathering.invitations).filter(function(j,k) { return k.key == inviteKey; })[0];
+                               equal(invitation.vote, gathering.places[0].key, 'call successful');
+                               start();
+                           });
+                        });
+                        
+                        asyncTest("verifying vote persisted", function() {
+                            $.w.rest.gatheringByInvite(inviteKey, function(gathering) {
+                               var invitation = $(gathering.invitations).filter(function(j,k) { return k.key == inviteKey; })[0];
+                               equal(invitation.vote, gathering.places[0].key, 'vote persisted');
+                               start();
                             });
                         });
                     };
