@@ -1,12 +1,17 @@
 $(function() {
-    var gathering;
-    var i=$.w.param('i');
-    $.w.rest.gatheringByInvite(i,function(g) {
+    var gathering, inviteKey=$.w.param('i');
+    $.w.rest.gatheringByInvite(inviteKey,function(g) {
         gathering=g;
-        $( "#gatheringTemplate" ).tmpl(gathering).appendTo( "#respond" );
-        $('#goingBox').click(function() {
-           alert(this.checked); 
+        var currentVote, tmpl = $('#gatheringTemplate').tmpl(gathering);
+        tmpl.find('#goingBox').click(function() {
+            var placeKey=$(this).data('placeKey');
+            $.w.rest.vote(inviteKey, placeKey, function(){});
         });
+        currentVote=$(gathering.invitations).filter(function(j,k) { return k.key === inviteKey; })[0].vote;
+        $('.voteCheck').each(function(a,chk) {
+            chk.checked=($(chk).data('placeKey') === currentVote);
+        });
+        
     });
    
 });

@@ -1,9 +1,9 @@
 $.extend({
     w: {
         params: function(){
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++)
+            var vars = [], hash, i,
+            hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(i = 0; i < hashes.length; i++)
             {
                 hash = hashes[i].split('=');
                 vars.push(hash[0]);
@@ -18,7 +18,7 @@ $.extend({
             config: {
                 baseUrl: '../..',
                 error: function(jqXHR, textStatus, errorThrown) {
-                    alert(errorThrown);
+                    window.alert(errorThrown);
                 }
             },
             __call: function(type, url, data, cb) {

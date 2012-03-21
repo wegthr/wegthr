@@ -119,6 +119,26 @@
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jslint-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jslint</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceJsFolder>webapp</sourceJsFolder>
+                    <predefinedVars>$,window</predefinedVars>
+                    <excludes>
+                        <exclude>**/jquery.tmpl.min.js</exclude>
+                        <exclude>_ah/**/*.js</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
                 <version>1.0-beta-2</version>
                 <executions>
@@ -223,14 +243,6 @@
                 <groupId>net.kindleit</groupId>
                 <artifactId>maven-gae-plugin</artifactId>
                 <version>0.9.2</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.kindleit</groupId>
-                        <artifactId>gae-runtime</artifactId>
-                        <version>${gae.version}</version>
-                        <type>pom</type>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <serverId>appengine.google.com</serverId>
                     <sdkDir>${appengine.sdk.root}</sdkDir>
