@@ -13,6 +13,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<war.dir>src/main/webapp</war.dir>
         <gae.version>1.6.4</gae.version>
         <guice.version>3.0</guice.version>
         <jersey.version>1.8</jersey.version>
@@ -94,10 +95,9 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
-                <directory>src</directory>
+                <directory>src/main/java</directory>
                 <excludes>
                     <exclude>*.java</exclude>
                 </excludes>
@@ -129,7 +129,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceJsFolder>webapp</sourceJsFolder>
+                    <sourceJsFolder>${war.dir}</sourceJsFolder>
                     <predefinedVars>$,window</predefinedVars>
                     <excludes>
                         <exclude>**/jquery.tmpl.min.js</exclude>
@@ -148,7 +148,7 @@
                         </goals>
                         <configuration>
                             <compress>true</compress>
-                            <sourceDirectory>webapp</sourceDirectory>
+                            <sourceDirectory>${war.dir}</sourceDirectory>
                             <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
                         </configuration>
                     </execution>
@@ -166,7 +166,7 @@
                                 <exclude>*.less</exclude>
                             </excludes>
                             <filtering>true</filtering>
-                            <directory>webapp</directory>
+                            <directory>${war.dir}</directory>
                         </resource>
                     </webResources>
                 </configuration>
