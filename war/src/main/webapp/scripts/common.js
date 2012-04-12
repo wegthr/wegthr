@@ -14,6 +14,9 @@ $.extend({
         param: function(name){
             return this.params()[name];
         },
+	template: {
+	    
+	},
         rest: {
             config: {
                 baseUrl: '../..',
@@ -45,4 +48,10 @@ $.extend({
             }
         }
     }
+});
+
+$.fn.extend({
+   tmpl: function(data) {
+	return $(Mustache.to_html($(this).text(), data));
+   }
 });

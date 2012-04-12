@@ -132,9 +132,9 @@
                     <sourceJsFolder>${war.dir}</sourceJsFolder>
                     <predefinedVars>$,window</predefinedVars>
                     <excludes>
-                        <exclude>**/jquery.tmpl.min.js</exclude>
+                        <exclude>**/mustache.js</exclude>
                         <exclude>_ah/**/*.js</exclude>
-                    </excludes>
+	            </excludes>
                 </configuration>
             </plugin>
             <plugin>
