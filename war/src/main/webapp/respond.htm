@@ -1,39 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
         <title>wgthr</title>
-        <link href='http://fonts.googleapis.com/css?family=Voces' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="stylesheet.css" />
-    </head>
-    <body>
-        <div id="frame">
-            <div id="respond" class="center-box">
-                <script id="gatheringTemplate" type="text/html">
-                    <h1>{{title}}</h1>
-                    <span class="note">organized by {{organizerEmail}}</span>
-                    <p><input type="checkbox" id="goingBox" class="voteCheck" data-placeKey="{{places.0.key}}" /> You going?</p>
-                </script>
-            </div>
-	</div>
-        <div id="footer">
-            <img class="powered-by" src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
-            <div class="version">${project.name}.v${project.version}</div>
-        </div>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script type="text/javascript" src="scripts/mustache.js"></script>
-        <script type="text/javascript" src="scripts/common.js"></script>
-        <script type="text/javascript" src="scripts/respond.js"></script>
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-29462949-1']);
-            _gaq.push(['_trackPageview']);
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<script src="scripts/less.js" type="text/javascript"></script>
+	<!-- Le styles -->
+        <link rel="stylesheet/less" type="text/css" href="less/styles.less">
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-    </body>
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]--><!DOCTYPE html>
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+	    <div class="container">
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		</a>
+		<a class="brand" href="#">wegthr</a>
+		<div class="nav-collapse">
+		    <ul class="nav">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#contact">Contact</a></li>
+		    </ul>
+		</div>
+	    </div>
+	</div>
+    </div>
+    <div class="container">
+	<div id="respond" class="hero-unit">
+	    <h1>Respond</h1>
+	    <p>
+		<span id="organized-by" class="label">organized by </span>
+	    </p>
+	    <p>
+		<label class="checkbox">
+		    <input type="checkbox" id="goingBox" data-placeKey="{{places.0.key}}" /> You going?
+		</label>
+	    </p>
+	</div>
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/mustache.js"></script>
+    <script type="text/javascript" src="scripts/common.js"></script>
+    <script type="text/javascript" src="scripts/respond.js"></script>
+    <script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-29462949-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+    </script>
+</body>
 </html>

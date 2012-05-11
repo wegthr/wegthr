@@ -14,6 +14,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<war.dir>src/main/webapp</war.dir>
+	<src.less>src/main/less</src.less>
         <gae.version>1.6.4</gae.version>
         <guice.version>3.0</guice.version>
         <jersey.version>1.8</jersey.version>
@@ -130,14 +131,16 @@
                 </executions>
                 <configuration>
                     <sourceJsFolder>${war.dir}</sourceJsFolder>
-                    <predefinedVars>$,window</predefinedVars>
+                    <predefinedVars>$,window,Mustache</predefinedVars>
                     <excludes>
-                        <exclude>**/mustache.js</exclude>
+                        <exclude>**/less.js</exclude>
+			<exclude>**/mustache.js</exclude>
                         <exclude>_ah/**/*.js</exclude>
+			<exclude>bootstrap/**/*.js</exclude>
 	            </excludes>
                 </configuration>
             </plugin>
-            <plugin>
+<!--            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
                 <version>1.0-beta-2</version>
@@ -148,12 +151,12 @@
                         </goals>
                         <configuration>
                             <compress>true</compress>
-                            <sourceDirectory>${war.dir}</sourceDirectory>
-                            <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                            <sourceDirectory>${src.less}</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/css</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>

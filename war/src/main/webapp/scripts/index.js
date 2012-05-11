@@ -13,6 +13,14 @@ $(function() {
             };
             $.post('rest/gathering/create.json', payload);
         });
+	
+	$('input[name="attendees"]').focus(function(){
+	   $('#attendees-help').fadeIn('slow'); 
+	});
+	$('input[name="attendees"]').blur(function(){
+	   $('#attendees-help').fadeOut('slow'); 
+	});
+	
     }());
    
 });
